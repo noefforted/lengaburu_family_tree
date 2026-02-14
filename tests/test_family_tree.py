@@ -108,7 +108,7 @@ class TestFamilyTreeComprehensive(unittest.TestCase):
         
         # Kasus: Relasi valid tapi hasil kosong (NONE)
         # Arthur adalah puncak, tidak punya ayah di data
-        self.assert_rel("Arthur", "Father", "NONE")
+        self.assert_rel("Arthur", "Fathers", "NONE")
         
         # Kasus: Tambah anak pada Laki-laki (Harus gagal)
         res_add = self.tree.add_child("Arthur", "NewKid", "Male")
