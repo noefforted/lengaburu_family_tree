@@ -39,6 +39,30 @@ The project is organized into modular components to ensure maintainability and s
 - **`src/core/`**: Contains utility modules like `seeder.py` (to initialize the tree with default data) and custom exceptions.
 - **`tests/`**: Contains unit tests to ensure the correctness of the application.
 
+## Role of Each Script
+
+To keep the code clean and professional, I separated the responsibilities as follows:
+
+- **`main.py`** (The Entry Point)
+It acts as the "receptionist." It handles file input/output and system errors (like file not found). It doesn't know how families work; it only knows how to read lines and print results.
+- **`src/models/person.py`** (The Data Entity)
+This is the core building block. It stores the data for one individual. Its most important job is maintaining data integrity—for example, making sure that if a child is added, both the mother and the spouse (father) are updated as parents.
+
+- **`src/models/family_tree.py`** (The Manager)
+It acts as the "database manager." It keeps a dictionary of every Person object. It provides the main API for the system (add_child and get_relationship) so that main.py doesn't have to touch the data models directly.
+
+- **`src/core/seeder.py`** (The Builder)
+This script is strictly for setup. It contains the "Source of Truth" for the initial family members. By keeping this separate, we can easily change the starting family without touching the logic scripts.
+
+- **`src/relationships/factory.py`** (The Dispatcher)
+This script handles the Strategy Pattern. It maps a string (like "Siblings") to a specific logic class. This makes the system "pluggable"—we can add new relationships without changing the FamilyTree class.
+
+- **`src/relationships/strategies.py`** (The Logic Engine)
+This is where the "intelligence" lives. Each class here contains exactly one algorithm for one specific relationship. This keeps the logic small, testable, and easy to debug.
+
+- **~src/core/exceptions.py~** (The Error Handler)
+It ensures that error messages are consistent across the whole application. Instead of typing "PERSON_NOT_FOUND" in ten different files, we call it from here once.
+
 ## Architectural Decisions & Design Patterns
 
 The codebase involves several professional software design patterns to handle the complexity of family relationships cleanly.
