@@ -1,6 +1,6 @@
 # Lengaburu Family Tree
 
-This project is a Python-based application that models the Lengaburu family tree. It allows users to define family relationships, add children to existing members, and query various relationships between family members (e.g., "Maternal-Uncle", "Siblings", "Granddaughter").
+This project is a Python based application that models the Lengaburu family tree. It allows users to define family relationships, add children to existing members, and query various relationships between family members (e.g., "Maternal-Uncle", "Siblings", "Granddaughter").
 
 ## How to Run
 
@@ -17,6 +17,17 @@ python3 main.py input.txt
 The input file should contain commands in the following format:
 - `ADD_CHILD [MotherName] [ChildName] [Gender]`
 - `GET_RELATIONSHIP [Name] [RelationshipType]`
+
+## Running Tests
+
+To verify the correctness of the solution, you can run the comprehensive unit test suite included in the `tests/` directory.
+
+Run this command from the project root:
+
+```bash
+python3 -m unittest ./tests/test_family_tree.py
+```
+
 
 ## Project Structure
 
