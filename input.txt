@@ -1,2 +1,1 @@
-GET_RELATIONSHIP Victoire Son
-GET_RELATIONSHIP Ted Son
+ADD_CHILD Flora Aufa Notgender

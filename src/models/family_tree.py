@@ -1,7 +1,6 @@
 from __future__ import annotations
 from .person import Person, Gender
 from ..relationships.factory import RelationFactory
-from ..core.exceptions import PersonNotFoundError, ChildAdditionFailedError
 
 class FamilyTree:
     def __init__(self) -> None:
@@ -9,7 +8,10 @@ class FamilyTree:
         self.registry = RelationFactory.get_all_strategies()
 
     def add_person(self, name: str, gender_str: str) -> Person:
-        gender = Gender.MALE if gender_str == "Male" else Gender.FEMALE
+        gender_map = {"Male": Gender.MALE, "Female": Gender.FEMALE}
+        gender = gender_map.get(gender_str)
+        if not gender: return "INVALID GENDER"
+
         person = Person(name, gender)
         self.members[name] = person
         return person
@@ -20,14 +22,16 @@ class FamilyTree:
             p1.set_spouse(p2)
             p2.set_spouse(p1)
 
-    # family_tree.py
     def add_child(self, mother_name: str, child_name: str, gender_str: str) -> str:
         mother = self.members.get(mother_name)
         if not mother: return "PERSON_NOT_FOUND"
         if mother.gender != Gender.FEMALE: return "CHILD_ADDITION_FAILED"
         if child_name in self.members: return "CHILD_ADDITION_FAILED"
         
-        gender = Gender.MALE if gender_str == "Male" else Gender.FEMALE
+        gender_map = {"Male": Gender.MALE, "Female": Gender.FEMALE}
+        gender = gender_map.get(gender_str)
+        if not gender: return "INVALID GENDER"
+
         child = Person(child_name, gender)
         
         # Cukup panggil ini! Logika di person.py yang akan mengurus Ted (si Ayah)
