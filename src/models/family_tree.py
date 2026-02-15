@@ -1,6 +1,7 @@
 from __future__ import annotations
 from .person import Person, Gender
 from ..relationships.factory import RelationFactory
+from ..core.exceptions import PersonNotFound, ChildAdditionFailed, GotNoOne, InvalidGender
 
 class FamilyTree:
     def __init__(self) -> None:
@@ -8,9 +9,8 @@ class FamilyTree:
         self.registry = RelationFactory.get_all_strategies()
 
     def add_person(self, name: str, gender_str: str) -> Person:
-        gender_map = {"Male": Gender.MALE, "Female": Gender.FEMALE}
-        gender = gender_map.get(gender_str)
-        if not gender: return "INVALID GENDER"
+        gender = Gender.from_str(gender_str)
+        if not gender: return InvalidGender.message()
 
         person = Person(name, gender)
         self.members[name] = person
@@ -24,13 +24,12 @@ class FamilyTree:
 
     def add_child(self, mother_name: str, child_name: str, gender_str: str) -> str:
         mother = self.members.get(mother_name)
-        if not mother: return "PERSON_NOT_FOUND"
-        if mother.gender != Gender.FEMALE: return "CHILD_ADDITION_FAILED"
-        if child_name in self.members: return "CHILD_ADDITION_FAILED"
+        if not mother: return PersonNotFound.message()
+        if mother.gender != Gender.FEMALE: return ChildAdditionFailed.message()
+        if child_name in self.members: return ChildAdditionFailed.message()
         
-        gender_map = {"Male": Gender.MALE, "Female": Gender.FEMALE}
-        gender = gender_map.get(gender_str)
-        if not gender: return "INVALID GENDER"
+        gender = Gender.from_str(gender_str)
+        if not gender: return InvalidGender.message()
 
         child = Person(child_name, gender)
         
@@ -42,10 +41,10 @@ class FamilyTree:
 
     def get_relationship(self, name: str, rel_type: str) -> str:
         person = self.members.get(name)
-        if not person: return "PERSON_NOT_FOUND"
+        if not person: return PersonNotFound.message()
         strategy = self.registry.get(rel_type)
-        if not strategy: return "NONE"
+        if not strategy: return GotNoOne.message()
         
         results = strategy.find(person)
-        if not results: return "NONE"
+        if not results: return GotNoOne.message()
         return " ".join([p.name for p in results])

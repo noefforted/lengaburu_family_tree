@@ -1,6 +1,7 @@
 import unittest
 from src.models.family_tree import FamilyTree
 from src.core.seeder import seed_data
+from src.core.exceptions import PersonNotFound, ChildAdditionFailed, GotNoOne, InvalidGender
 
 class TestFamilyTreeComprehensive(unittest.TestCase):
     def setUp(self) -> None:
@@ -18,8 +19,8 @@ class TestFamilyTreeComprehensive(unittest.TestCase):
         actual = self.tree.get_relationship(person, relation)
         
         # Comparison logic
-        actual_set = set(actual.split()) if actual not in ["NONE", "PERSON_NOT_FOUND"] else actual
-        expected_set = set(expected.split()) if expected not in ["NONE", "PERSON_NOT_FOUND"] else expected
+        actual_set = set(actual.split()) if actual not in [GotNoOne.message(), PersonNotFound.message(), ChildAdditionFailed.message(), InvalidGender.message()] else actual
+        expected_set = set(expected.split()) if expected not in [GotNoOne.message(), PersonNotFound.message(), ChildAdditionFailed.message(), InvalidGender.message()  ] else expected
         
         is_match = actual_set == expected_set
         self.log_result(is_match, person, relation, expected, actual)
@@ -41,7 +42,7 @@ class TestFamilyTreeComprehensive(unittest.TestCase):
             ("Remus", "Maternal-Aunt", "Dominique"),
             ("Louis", "Paternal-Uncle", "Charlie Percy Ronald"),
             ("Louis", "Paternal-Aunt", "Ginerva"),
-            ("Rose", "Maternal-Uncle", "NONE"),
+            ("Rose", "Maternal-Uncle", GotNoOne.message()),
             ("James", "Maternal-Uncle", "Bill Charlie Percy Ronald"),
             
             # In-Laws
@@ -61,7 +62,7 @@ class TestFamilyTreeComprehensive(unittest.TestCase):
             ("King-Arthur", "Spouse", "Queen-Margret"),
             ("Flora", "Spouse", "Bill"),
             ("Ted", "Spouse", "Victoire"),
-            ("Charlie", "Spouse", "NONE"), # Charlie tidak punya istri di seeder
+            ("Charlie", "Spouse", GotNoOne.message()), # Charlie tidak punya istri di seeder
 
             # Children (Son + Daughter)
             ("King-Arthur", "Children", "Bill Charlie Percy Ronald Ginerva"),
@@ -80,20 +81,20 @@ class TestFamilyTreeComprehensive(unittest.TestCase):
         print("\n--- Running Edge Case Scenarios ---")
         
         # Person not found
-        self.assert_rel("Aufa", "Siblings", "PERSON_NOT_FOUND")
+        self.assert_rel("Aufa", "Siblings", PersonNotFound.message())
         
         # Valid relation but no person
-        self.assert_rel("King-Arthur", "Father", "NONE")
+        self.assert_rel("King-Arthur", "Father", GotNoOne.message())
         
         # Add child to a person who is not a mother
         res_add = self.tree.add_child("King-Arthur", "Aufa", "Male")
-        self.log_result(res_add == "CHILD_ADDITION_FAILED", "King-Arthur", "ADD_CHILD", "CHILD_ADDITION_FAILED", res_add)
-        self.assertEqual(res_add, "CHILD_ADDITION_FAILED")
+        self.log_result(res_add == ChildAdditionFailed.message(), "King-Arthur", "ADD_CHILD", ChildAdditionFailed.message(), res_add)
+        self.assertEqual(res_add, ChildAdditionFailed.message())
 
         # Add child to a non-existent mother
         res_add_nf = self.tree.add_child("Rihana", "Baby", "Female")
-        self.log_result(res_add_nf == "PERSON_NOT_FOUND", "Rihana", "ADD_CHILD", "PERSON_NOT_FOUND", res_add_nf)
-        self.assertEqual(res_add_nf, "PERSON_NOT_FOUND")
+        self.log_result(res_add_nf == PersonNotFound.message(), "Rihana", "ADD_CHILD", PersonNotFound.message(), res_add_nf)
+        self.assertEqual(res_add_nf, PersonNotFound.message())
 
     # 3. TEST ALL MEMBERS EXISTENCE
     def test_every_family_member_existence(self):
