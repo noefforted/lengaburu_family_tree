@@ -25,7 +25,7 @@ class FamilyTree:
         # logic check to prevent marrying oneself
         if p1 == p2: return exceptions.SelfMarriage.message()
         # check if either person is already married
-        if p1.spouse or p2.spouse: return exceptions.CannotPolimory.message()
+        if p1.spouse or p2.spouse: return exceptions.CannotPolyamory.message()
         # validation for gender compatibility in marriage
         if p1.gender == p2.gender: return exceptions.NotSameGenderMarriage.message()
 

@@ -9,9 +9,9 @@ class SelfMarriage(InvalidCommand):
     @classmethod
     def message(cls): print("Error while seeding: Attempting to self marry is not allowed")
 
-class CannotPolimory(InvalidCommand):
+class CannotPolyamory(InvalidCommand):
     @classmethod
-    def message(cls): print("Error while seeding: Attempting to polymory is not allowed")
+    def message(cls): print("Error while seeding: Attempting to polyamory is not allowed")
 
 class NotSameGenderMarriage(InvalidCommand):
     @classmethod
