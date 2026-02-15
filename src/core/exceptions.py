@@ -19,7 +19,7 @@ class NotSameGenderMarriage(InvalidCommand):
 
 class ChildAdditionFailed(InvalidCommand):
     @classmethod
-    def message(cls): return "CHILD_ADDITION_FAILED (only mothers can add children)"
+    def message(cls): return "CHILD_ADDITION_FAILED (only mother can add child)"
 
 class PersonAlreadyExists(InvalidCommand):
     @classmethod
