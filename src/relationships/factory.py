@@ -8,7 +8,7 @@ class RelationFactory:
     @classmethod
     def get_all_strategies(cls):
         if cls._strategies is None:
-            # Otomatis mendaftar semua class yang punya COMMAND_NAME
+            # automatically discover all strategy subclasses and register them by their command name
             cls._strategies = {
                 sub.COMMAND_NAME: sub() 
                 for sub in RelationshipStrategy.__subclasses__()
