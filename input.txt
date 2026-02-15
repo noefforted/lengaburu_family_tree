@@ -1,3 +1,5 @@
+GET_RELATIONSHIP Charlie Spouse
+GET_RELATIONSHIP Ted Brother-In-Law
 ADD_CHILD Queen-Margret Bill Male
 ADD_CHILD Queen-Margret Ginerva Female
 GET_RELATIONSHIP Bill Siblings

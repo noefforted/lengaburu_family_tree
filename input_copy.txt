@@ -1,0 +1,6 @@
+GET_RELATIONSHIP Remus Great-Grandfather
+GET_RELATIONSHIP Remus Great-Grandmother
+GET_RELATIONSHIP Remus Great-Grandparent
+GET_RELATIONSHIP King-Arthur Great-Grandson
+GET_RELATIONSHIP King-Arthur Great-Granddaughter
+GET_RELATIONSHIP King-Arthur Unknownrelationship
