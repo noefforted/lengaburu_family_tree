@@ -20,18 +20,21 @@ class FamilyTree:
             p1.set_spouse(p2)
             p2.set_spouse(p1)
 
-    def add_child(self, mother_name: str, child_name: str, gender: str) -> str:
-            mother = self.members.get(mother_name)
-            if not mother: return "PERSON_NOT_FOUND"
-            if mother.gender != Gender.FEMALE: return "CHILD_ADDITION_FAILED"
+    # family_tree.py
+    def add_child(self, mother_name: str, child_name: str, gender_str: str) -> str:
+        mother = self.members.get(mother_name)
+        if not mother: return "PERSON_NOT_FOUND"
+        if mother.gender != Gender.FEMALE: return "CHILD_ADDITION_FAILED"
+        if child_name in self.members: return "CHILD_ADDITION_FAILED"
+        
+        gender = Gender.MALE if gender_str == "Male" else Gender.FEMALE
+        child = Person(child_name, gender)
+        
+        # Cukup panggil ini! Logika di person.py yang akan mengurus Ted (si Ayah)
+        mother.add_child(child)
             
-            
-            child = Person(child_name, Gender.MALE if gender == "Male" else Gender.FEMALE)
-            
-            mother.add_child(child)
-                
-            self.members[child_name] = child
-            return "CHILD_ADDED"
+        self.members[child_name] = child
+        return "CHILD_ADDED"
 
     def get_relationship(self, name: str, rel_type: str) -> str:
         person = self.members.get(name)
