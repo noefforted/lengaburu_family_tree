@@ -72,10 +72,8 @@ class FatherStrategy(RelationshipStrategy):
 class GrandsonStrategy(RelationshipStrategy):
     def find(self, person: Person) -> List[Person]:
         grandsons = []
-        # Gunakan list anak dari diri sendiri DAN pasangan untuk memastikan kakek/nenek terjaring
-        all_children = person.children
-        if person.spouse and not all_children:
-            all_children = person.spouse.children
+
+        all_children = list(set(person.children + (person.spouse.children if person.spouse else [])))
             
         for child in all_children:
             # Sama halnya dengan cucu, cek di sisi pasangan si anak jika perlu
@@ -117,10 +115,8 @@ class GrandmotherStrategy(RelationshipStrategy):
 class GranddaughterStrategy(RelationshipStrategy):
     def find(self, person: Person) -> List[Person]:
         res = []
-        # Gunakan logika yang sama dengan Grandson tapi filter Female
-        all_children = person.children
-        if person.spouse and not all_children:
-            all_children = person.spouse.children
+        
+        all_children = list(set(person.children + (person.spouse.children if person.spouse else [])))
             
         for child in all_children:
             grandchildren = child.children
@@ -133,11 +129,8 @@ class GranddaughterStrategy(RelationshipStrategy):
 
 class GrandchildStrategy(RelationshipStrategy):
     def find(self, person: Person) -> List[Person]:
-        # Gabungan dari Grandson dan Granddaughter
         res = []
-        all_children = person.children
-        if person.spouse and not all_children:
-            all_children = person.spouse.children
+        all_children = list(set(person.children + (person.spouse.children if person.spouse else [])))
             
         for child in all_children:
             grandchildren = child.children

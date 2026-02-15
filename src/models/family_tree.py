@@ -33,7 +33,6 @@ class FamilyTree:
 
         child = Person(child_name, gender)
         
-        # Cukup panggil ini! Logika di person.py yang akan mengurus Ted (si Ayah)
         mother.add_child(child)
             
         self.members[child_name] = child
