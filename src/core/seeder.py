@@ -1,12 +1,18 @@
-def seed_data(tree):
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from ..models.family_tree import FamilyTree
+
+def seed_data(tree: FamilyTree) -> None:
     # Gen 1
-    tree.add_person("Arthur", "Male")
-    tree.add_person("Margret", "Female")
-    tree.marry("Arthur", "Margret")
+    tree.add_person("King-Arthur", "Male")
+    tree.add_person("Queen-Margret", "Female")
+    tree.marry("King-Arthur", "Queen-Margret")
     
     # Gen 2
     for c in [("Bill","Male"), ("Charlie","Male"), ("Percy","Male"), ("Ronald","Male"), ("Ginerva","Female")]:
-        tree.add_child("Margret", c[0], c[1])
+        tree.add_child("Queen-Margret", c[0], c[1])
     
     tree.add_person("Flora", "Female"); tree.marry("Bill", "Flora")
     tree.add_person("Audrey", "Female"); tree.marry("Percy", "Audrey")
