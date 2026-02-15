@@ -60,7 +60,7 @@ This script handles the Strategy Pattern. It maps a string (like "Siblings") to 
 - **`src/relationships/strategies.py`** (The Logic Engine)
 This is where the "intelligence" lives. Each class here contains exactly one algorithm for one specific relationship. This keeps the logic small, testable, and easy to debug.
 
-- **~src/core/exceptions.py~** (The Error Handler)
+- **`src/core/exceptions.py`** (The Error Handler)
 It ensures that error messages are consistent across the whole application. Instead of typing "PERSON_NOT_FOUND" in ten different files, we call it from here once.
 
 ## Architectural Decisions & Design Patterns
