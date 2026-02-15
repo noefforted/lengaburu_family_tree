@@ -1,1 +1,24 @@
-ADD_CHILD Flora Aufa Notgender
+ADD_CHILD Queen-Margret Bill Male
+ADD_CHILD Queen-Margret Ginerva Female
+GET_RELATIONSHIP Bill Siblings
+GET_RELATIONSHIP Ginerva Brother-In-Law
+
+ADD_CHILD Flora Victoire Female
+ADD_CHILD Flora Dominique Female
+ADD_CHILD Flora Louis Male
+GET_RELATIONSHIP Victoire Siblings
+
+ADD_CHILD Victoire Remus Male
+GET_RELATIONSHIP Ted Son 
+
+ADD_CHILD King-Arthur Baby Male
+ADD_CHILD Queen-Margret Diana NotFemale
+
+GET_RELATIONSHIP Remus Maternal-Aunt
+GET_RELATIONSHIP Bill Sister-In-Law
+
+GET_RELATIONSHIP King-Arthur Grandson
+GET_RELATIONSHIP Queen-Margret Granddaughter
+
+GET_RELATIONSHIP Voldemort Siblings
+ADD_CHILD Voldemort Delphi Female

@@ -1,7 +1,7 @@
 from __future__ import annotations
 from .person import Person, Gender
 from ..relationships.factory import RelationFactory
-from ..core.exceptions import PersonNotFound, ChildAdditionFailed, GotNoOne, InvalidGender
+from ..core.exceptions import PersonNotFound, ChildAdditionFailed, GotNoOne, InvalidGender, PersonAlreadyExists
 
 class FamilyTree:
     def __init__(self) -> None:
@@ -26,7 +26,7 @@ class FamilyTree:
         mother = self.members.get(mother_name)
         if not mother: return PersonNotFound.message()
         if mother.gender != Gender.FEMALE: return ChildAdditionFailed.message()
-        if child_name in self.members: return ChildAdditionFailed.message()
+        if child_name in self.members: return PersonAlreadyExists.message()
         
         gender = Gender.from_str(gender_str)
         if not gender: return InvalidGender.message()
