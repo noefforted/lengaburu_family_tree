@@ -140,6 +140,9 @@ class TestFamilyTreeComprehensive(unittest.TestCase):
             ("King-Arthur", "Great-Grandson", "Remus Draco William Ron"),
             ("King-Arthur", "Great-Granddaughter", "Aster Ginny"),
             ("King-Arthur", "Great-Grandchild", "Remus Draco William Ron Aster Ginny"),
+            # cousins
+            ("Ted", "Cousin", exceptions.GotNoOne.message()),
+            ("Molly", "Cousin", "Victoire Dominique Louis Rose Hugo James Albus Lily"),
             # invalid queries
             ("Aufa", "Siblings", exceptions.PersonNotFound.message()),
             ("King-Arthur", "Father", exceptions.GotNoOne.message()),

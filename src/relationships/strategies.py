@@ -258,3 +258,18 @@ class GreatGrandmotherStrategy(RelationshipStrategy):
         # filter great-grandparent results for females
         all_ggp = GreatGrandparentStrategy().find(person)
         return [p for p in all_ggp if p.gender == Gender.FEMALE]
+    
+class CousinStrategy(RelationshipStrategy):
+    COMMAND_NAME = "Cousin"
+    def find(self, person: Person) -> List[Person]:
+        res = []
+        # reuse uncle/aunt strategies to find all uncles and aunts
+        uncles_aunts = []
+        uncles_aunts.extend(PaternalUncleStrategy().find(person))
+        uncles_aunts.extend(PaternalAuntStrategy().find(person))
+        uncles_aunts.extend(MaternalUncleStrategy().find(person))
+        uncles_aunts.extend(MaternalAuntStrategy().find(person))
+        # merge all children of uncles and aunts to get cousins
+        for relative in uncles_aunts:
+            res.extend(relative.children)
+        return res
